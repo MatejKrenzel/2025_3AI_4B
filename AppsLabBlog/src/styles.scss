@@ -1,0 +1,43 @@
+@use '@angular/material' as mat;
+@include mat.core();
+
+$myapp-theme-primary: mat.m2-define-palette(mat.$m2-indigo-palette, A400, A100, A700);
+$myapp-theme-accent: mat.m2-define-palette(mat.$m2-indigo-palette);
+
+
+$myapp-theme: mat.m2-define-light-theme((
+  color: (
+    primary: $myapp-theme-primary,
+    accent: $myapp-theme-accent,
+    
+  )
+));
+
+@include mat.all-component-themes($myapp-theme);
+body{
+    background-color: #F3F3E6;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+$colors: (
+primary: #F3F3E6,
+secondary: #f5911e,
+danger: #f53d3d,
+light: #f4f4f4,
+dark: #222,
+favorite: #69BB7B,
+darkgraycustom: #333333,
+mediumgraycustom:#666666,
+lightgraycustom : #b2b2b2
+);

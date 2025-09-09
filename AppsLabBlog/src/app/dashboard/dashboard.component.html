@@ -1,0 +1,32 @@
+<mat-toolbar color="brown">
+  <button mat-button (click)="navigateTo('home')">Home</button>
+  <button mat-button (click)="navigateTo('contact')">Contact</button>
+  <button mat-button (click)="navigateTo('register')">Login/Register</button>
+<button mat-button (click)="navigateTo('dashboard')">Usser</button>
+  <span class="spacer"></span> <button mat-stroked-button color="accent" (click)="logout()">Odhlásiť sa</button>
+</mat-toolbar>
+
+
+<div class="dashboard-wrapper" *ngIf="user">
+  <mat-card>
+    <mat-card-header>
+      <div mat-card-avatar class="avatar">
+        <img [src]="user.photoURL || defaultAvatar" alt="Avatar" />
+      </div>
+      <mat-card-title>{{ user.displayName || 'Používateľ' }}</mat-card-title>
+      <mat-card-subtitle>{{ user.email }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p><strong>UID:</strong> {{ user.uid }}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card *ngIf="stats" class="stats-card">
+    <mat-card-title>📊 Štatistiky účtu</mat-card-title>
+    <mat-card-content>
+      <p><strong>Počet postov:</strong> {{ stats.posts }}</p>
+      <p><strong>Počet komentárov:</strong> {{ stats.comments }}</p>
+      <p><strong>Registrovaný od:</strong> {{ stats.joinedAt }}</p>
+    </mat-card-content>
+  </mat-card>
+</div>

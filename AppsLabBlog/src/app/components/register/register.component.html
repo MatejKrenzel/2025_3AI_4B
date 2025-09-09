@@ -1,0 +1,42 @@
+<mat-toolbar color="primary">
+  <button mat-button (click)="navigateTo('home')">Home</button>
+  <button mat-button (click)="navigateTo('contact')">Contact</button>
+  <button mat-button (click)="navigateToLogin()">Login</button> </mat-toolbar>
+
+<div class="register-container">
+  <h2>Register</h2>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" required>
+      <mat-error *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
+        <span *ngIf="form.get('email')?.errors?.['required']">Email is required.</span>
+        <span *ngIf="form.get('email')?.errors?.['email']">Enter a valid email.</span>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required>
+      <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" type="button">
+        <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <mat-error *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
+        <span *ngIf="form.get('password')?.errors?.['required']">Password is required.</span>
+        <span *ngIf="form.get('password')?.errors?.['minlength']">Password must be at least 6 characters.</span>
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || loading">
+      <span *ngIf="!loading">Register</span>
+      <span *ngIf="loading">Registering...</span>
+    </button>
+
+    <div *ngIf="error" class="error-message">
+      {{ error }}
+    </div>
+  </form>
+
+  <p>Already have an account? <a routerLink="/login">Login here</a>.</p>
+</div>

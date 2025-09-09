@@ -1,0 +1,165 @@
+<mat-toolbar color="brown" class="custom-toolbar">
+  <button mat-button (click)="navigateTo('home')">
+    <mat-icon>home</mat-icon>
+    Home
+  </button>
+  <button mat-button (click)="navigateTo('register')">
+    <mat-icon>person</mat-icon>
+    Login/Register
+  </button>
+  <span class="spacer"></span>
+  <span class="toolbar-title">Contact Us</span>
+</mat-toolbar>
+
+<div class="contact-container">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">Get in Touch</h1>
+      <p class="hero-subtitle">
+        Have questions about AppsLaBlog? Want to collaborate or share feedback? 
+        We'd love to hear from you!
+      </p>
+    </div>
+  </section>
+
+  <!-- Creators Section -->
+  <section class="creators-section">
+    <h2 class="section-title">Meet the Creators</h2>
+    <div class="creators-grid">
+      <mat-card *ngFor="let creator of creators" class="creator-card">
+        <div class="creator-header">
+          <img [src]="creator.avatar" [alt]="creator.name" class="creator-avatar">
+          <div class="creator-info">
+            <h3 class="creator-name">{{ creator.name }}</h3>
+            <p class="creator-role">{{ creator.role }}</p>
+          </div>
+        </div>
+        <mat-card-content>
+          <p class="creator-description">{{ creator.description }}</p>
+        </mat-card-content>
+        <mat-card-actions class="creator-actions">
+          <button mat-button (click)="openGithub(creator.github)" class="github-btn">
+            <mat-icon>code</mat-icon>
+            GitHub
+          </button>
+          <button mat-button (click)="sendEmail(creator.email)" class="email-btn">
+            <mat-icon>email</mat-icon>
+            Email
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </section>
+
+  <!-- Contact Form Section -->
+  <section class="contact-form-section">
+    <div class="form-container">
+      <mat-card class="contact-form-card">
+        <mat-card-header>
+          <mat-card-title>Send us a Message</mat-card-title>
+          <mat-card-subtitle>We'll get back to you as soon as possible</mat-card-subtitle>
+        </mat-card-header>
+        
+        <mat-card-content>
+          <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Your Name</mat-label>
+                <input matInput formControlName="name" placeholder="Enter your full name">
+                <mat-icon matSuffix>person</mat-icon>
+                <mat-error *ngIf="contactForm.get('name')?.hasError('required')">
+                  Name is required
+                </mat-error>
+                <mat-error *ngIf="contactForm.get('name')?.hasError('minlength')">
+                  Name must be at least 2 characters long
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Email Address</mat-label>
+                <input matInput type="email" formControlName="email" placeholder="your.email@example.com">
+                <mat-icon matSuffix>email</mat-icon>
+                <mat-error *ngIf="contactForm.get('email')?.hasError('required')">
+                  Email is required
+                </mat-error>
+                <mat-error *ngIf="contactForm.get('email')?.hasError('email')">
+                  Please enter a valid email address
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Subject</mat-label>
+                <input matInput formControlName="subject" placeholder="What's this about?">
+                <mat-icon matSuffix>subject</mat-icon>
+                <mat-error *ngIf="contactForm.get('subject')?.hasError('required')">
+                  Subject is required
+                </mat-error>
+                <mat-error *ngIf="contactForm.get('subject')?.hasError('minlength')">
+                  Subject must be at least 5 characters long
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Message</mat-label>
+                <textarea 
+                  matInput 
+                  formControlName="message" 
+                  rows="6" 
+                  placeholder="Tell us more about your inquiry...">
+                </textarea>
+                <mat-icon matSuffix>message</mat-icon>
+                <mat-error *ngIf="contactForm.get('message')?.hasError('required')">
+                  Message is required
+                </mat-error>
+                <mat-error *ngIf="contactForm.get('message')?.hasError('minlength')">
+                  Message must be at least 10 characters long
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-actions">
+              <button 
+                mat-raised-button 
+                color="primary" 
+                type="submit" 
+                [disabled]="contactForm.invalid || isSubmitting"
+                class="submit-btn">
+                <mat-icon *ngIf="!isSubmitting">send</mat-icon>
+                <mat-icon *ngIf="isSubmitting" class="spinning">refresh</mat-icon>
+                {{ isSubmitting ? 'Sending...' : 'Send Message' }}
+              </button>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </section>
+
+  <!-- Additional Info Section -->
+  <section class="info-section">
+    <div class="info-grid">
+      <div class="info-card">
+        <mat-icon class="info-icon">school</mat-icon>
+        <h3>AppsLab Project</h3>
+        <p>This is a high school project built with Angular and Firebase, showcasing modern web development skills.</p>
+      </div>
+      <div class="info-card">
+        <mat-icon class="info-icon">code</mat-icon>
+        <h3>Open Source</h3>
+        <p>Check out our code on GitHub and feel free to contribute or provide feedback on our implementation.</p>
+      </div>
+      <div class="info-card">
+        <mat-icon class="info-icon">feedback</mat-icon>
+        <h3>Feedback Welcome</h3>
+        <p>We're always looking to improve! Share your thoughts and suggestions to help us grow.</p>
+      </div>
+    </div>
+  </section>
+</div>

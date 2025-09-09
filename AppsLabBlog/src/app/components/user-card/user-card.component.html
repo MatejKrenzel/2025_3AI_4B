@@ -1,0 +1,74 @@
+<!-- Tlačidlo na zobrazenie/skrytie formulára pridania nového postu -->
+<button mat-raised-button color="brown" (click)="toggleAddPostForm()">
+  {{ showAddPostForm ? 'Cancel' : 'Add New Post' }}
+</button>
+
+<!-- Formulár na pridanie nového postu -->
+<mat-card *ngIf="showAddPostForm" class="add-post-card">
+  <mat-card-title>Add New Post</mat-card-title>
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Description</mat-label>
+    <textarea
+      matInput
+      [(ngModel)]="newPostDescription"
+      placeholder="Write your post description here..."
+    ></textarea>
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="addNewPost()">
+    Submit Post
+  </button>
+</mat-card>
+
+<!-- Existujúci post -->
+<mat-card *ngIf="userPost" class="post-card">
+  <mat-card-header>
+    <img mat-card-avatar [src]="userPost.userId" [alt]="userPost.userId" />
+    <mat-card-title>{{ userPost.userId }}</mat-card-title>
+    <mat-card-subtitle>{{ userPost.timestamp.toLocaleString() }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{ userPost.description }}</p>
+  </mat-card-content>
+  <div class="action-bar">
+    <button class="vote-button" (click)="upvote()">
+      <mat-icon
+        aria-hidden="false"
+        aria-label="arrow_upward icon"
+        fontIcon="arrow_upward"
+      ></mat-icon>
+    </button>
+    <span class="vote-count">{{ userPost.upvotes }}</span>
+    <button class="vote-button" (click)="downvote()">
+      <mat-icon
+        aria-hidden="false"
+        aria-label="arrow_downward icon"
+        fontIcon="arrow_downward"
+      ></mat-icon>
+    </button>
+    <span class="vote-count">{{ userPost.downvotes }}</span>
+    <button class="comment-button" (click)="toggleComment()">
+      <mat-icon
+        aria-hidden="false"
+        aria-label="comment icon"
+        fontIcon="comment"
+      ></mat-icon>
+    </button>
+    <button class="share-button">
+      <mat-icon aria-hidden="false" aria-label="share icon" fontIcon="share"></mat-icon>
+    </button>
+  </div>
+
+  <div *ngIf="showCommentInput" class="comment-input">
+    <textarea
+      [(ngModel)]="newCommentText"
+      placeholder="Write a comment..."
+    ></textarea>
+    <button class="post-comment-button" (click)="addComment()">
+      Post Comment
+    </button>
+  </div>
+
+  <div *ngFor="let comment of userPost.comments" class="comment">
+    <p><strong>{{ comment.userId }}:</strong> {{ comment.text }}</p>
+  </div>
+</mat-card>

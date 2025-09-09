@@ -1,0 +1,39 @@
+<mat-toolbar color="brown" class="custom-toolbar">
+  <button mat-button (click)="navigateTo('home')">Home</button>
+  <button mat-button (click)="navigateTo('contact')">Contact</button>
+  <button mat-button (click)="navigateTo('register')">Login/Register</button>
+</mat-toolbar>
+
+<div class="auth-container">
+  <h2>Prihlásenie</h2>
+
+  <form [formGroup]="form" class="auth-form" (ngSubmit)="submit()">
+    <input
+      formControlName="email"
+      type="email"
+      placeholder="Email"
+      class="input-field"
+    />
+
+    <div class="password-container">
+      <input
+        formControlName="password"
+        type="password"
+        placeholder="Heslo"
+        class="password-input"
+     />
+    </div>
+
+    <button
+      type="submit"
+      class="submit-btn"
+      [disabled]="form.invalid || loading"
+    >
+      {{ loading ? 'Prihlasujem...' : 'Prihlásiť sa' }}
+    </button>
+
+    <a routerLink="/register" class="register-btn">Nemám účet</a>
+
+    <p class="error" *ngIf="error">{{ error }}</p>
+  </form>
+</div>
