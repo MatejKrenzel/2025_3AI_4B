@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, collectionData, doc, docData, addDoc, updateDoc, query, orderBy, where, limit } from '@angular/fire/firestore';
+import { Firestore, collectionData, doc, docData,  updateDoc, query, orderBy, where, limit } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UserPost } from '../interfaces/userpost';
 import { User } from 'firebase/auth';
+import { DocumentReference } from 'firebase/firestore';
+import { CollectionReference, DocumentData, collection, addDoc } from 'firebase/firestore';
+
 
 interface Comment {
   text: string;
@@ -17,6 +20,17 @@ interface ChatMessage {
   timestamp: Date;
 }
 
+/*const postConverter: FirestoreDataConverter<Omit<UserPost, 'id'>> = {
+  // Converts a UserPost object to Firestore data format
+  toFirestore: (post: Omit<UserPost, 'id'>) => {
+    return post;
+  },
+  // Converts Firestore snapshot data back to a UserPost object
+  fromFirestore: (snapshot) => {
+    return snapshot.data() as Omit<UserPost, 'id'>;
+  }
+};
+*/
 @Injectable({
   providedIn: 'root'
 })
@@ -57,15 +71,18 @@ export class FirestoreService {
     // await updateDoc(postDocRef, { comments: arrayUnion(comment) });
   }
 
-  addPost(post: Omit<UserPost, 'id'>): Promise<DocumentReference<Omit<UserPost, 'id'>>> {
-    const userPostsRef = collection(this.firestore, 'userPosts');
-    return addDoc(userPostsRef, post);
-  }
+ /* addPost(post: Omit<UserPost, 'id'>): Promise<DocumentReference<Omit<UserPost, 'id'>>> {
+  const userPostsRef = collection(this.firestore, 'userPosts').withConverter(postConverter);
+  return addDoc(userPostsRef, post);
+}*/
 
   // --- Chat Messages ---
 
   addChatMessage(message: ChatMessage): Promise<DocumentReference<ChatMessage>> {
-    const chatMessagesRef = collection(this.firestore, 'chatMessages');
+    const chatMessagesRef = collection(
+  this.firestore,
+  'messages'
+) as CollectionReference<ChatMessage>;
     return addDoc(chatMessagesRef, message);
   }
 

@@ -1,0 +1,23 @@
+{
+  "name": "2025_3ai_4b",
+  "version": "1.0.0",
+  "description": "[README.md](https://github.com/user-attachments/files/18668671/README.md)",
+  "main": "vite.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MatejKrenzel/2025_3AI_4B.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MatejKrenzel/2025_3AI_4B/issues"
+  },
+  "homepage": "https://github.com/MatejKrenzel/2025_3AI_4B#readme",
+  "dependencies": {
+    "@angular/fire": "^20.0.1"
+  }
+}

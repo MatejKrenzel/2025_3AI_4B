@@ -59,7 +59,7 @@ export class RegisterComponent {
 
     const { email, password } = this.form.value;
 
-    this.authService.register(email, password)
+   /*this.authService.register(email, password)
       .then(response => {
         console.log('Registration successful:', response);
         // Navigate to dashboard or another appropriate page after successful registration
@@ -71,7 +71,7 @@ export class RegisterComponent {
       })
       .finally(() => {
         this.loading = false;
-      });
+      });*/
   }
 
   // Helper for Firebase error messages

@@ -27,7 +27,7 @@ import { FirestoreService } from '../components/services/firestore.service';
 })
 export class DashboardComponent implements OnInit {
   user: User | null = null;
-  user$: Observable<firebase.User | null>;
+  user$: Observable<User | null>;
   defaultAvatar: string = 'https://www.gravatar.com/avatar?d=mp';
 
   stats: {
