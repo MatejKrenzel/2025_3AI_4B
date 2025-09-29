@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { Component, inject, OnInit } from '@angular/core';import { BrowserModule } from '@angular/platform-browser';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { single } from './data';
+import { collection, collectionData, Firestore } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-chart',
@@ -10,28 +11,12 @@ import { single } from './data';
   styleUrls: ['./chart.component.css'],
   imports: [NgxChartsModule],
 })
-export class GraphComponent {
-  single: any[] = [
-    {
-      name: 'Germany',
-      value: 8940000,
-    },
-    {
-      name: 'USA',
-      value: 5000000,
-    },
-    {
-      name: 'France',
-      value: 7200000,
-    },
-    {
-      name: 'UK',
-      value: 6200000,
-    },
-  ];
+export class GraphComponent implements OnInit {
+  firestore = inject(Firestore);
+
+  single: any[] = []; // Data for the chart
   view: [number, number] = [700, 400];
 
-  // options
   gradient: boolean = true;
   showLegend: boolean = true;
   showLabels: boolean = true;
@@ -42,19 +27,26 @@ export class GraphComponent {
     domain: ['#1fb112ff', '#A10A28', '#C7B42C', '#AAAAAA'],
   };
 
-  constructor() {
-    Object.assign(this, { single });
+  ngOnInit(): void {
+    const countriesRef = collection(this.firestore, 'Charts');
+    collectionData(countriesRef, { idField: 'id' }).subscribe((data: any[]) => {
+      // Make sure each item has a `name` and `value`
+      this.single = data.map(item => ({
+        name: item.name,
+        value: item.value,
+      }));
+    });
   }
 
   onSelect(data: { name: string; value: number }): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+    console.log('Item clicked', data);
   }
 
   onActivate(data: { name: string; value: number }): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
+    console.log('Activate', data);
   }
 
   onDeactivate(data: { name: string; value: number }): void {
-    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+    console.log('Deactivate', data);
   }
 }
