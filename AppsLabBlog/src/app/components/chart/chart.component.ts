@@ -1,8 +1,8 @@
-import { Component, inject, OnInit } from '@angular/core';import { BrowserModule } from '@angular/platform-browser';
+import { Component, OnInit } from '@angular/core';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { single } from './data';
-import { collection, collectionData, Firestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { ChartService } from '../../chart.service';
+
+
 
 @Component({
   selector: 'app-chart',
@@ -11,10 +11,9 @@ import { Observable } from 'rxjs';
   styleUrls: ['./chart.component.css'],
   imports: [NgxChartsModule],
 })
-export class GraphComponent implements OnInit {
-  firestore = inject(Firestore);
 
-  single: any[] = []; // Data for the chart
+export class GraphComponent implements OnInit {
+  single: ChartData[] = [];
   view: [number, number] = [700, 400];
 
   gradient: boolean = true;
@@ -27,10 +26,10 @@ export class GraphComponent implements OnInit {
     domain: ['#1fb112ff', '#A10A28', '#C7B42C', '#AAAAAA'],
   };
 
+  constructor(private chartService: ChartService) {}
+
   ngOnInit(): void {
-    const countriesRef = collection(this.firestore, 'Charts');
-    collectionData(countriesRef, { idField: 'id' }).subscribe((data: any[]) => {
-      // Make sure each item has a `name` and `value`
+    this.chartService.getChartData().subscribe((data: ChartData[]) => {
       this.single = data.map(item => ({
         name: item.name,
         value: item.value,
@@ -49,4 +48,8 @@ export class GraphComponent implements OnInit {
   onDeactivate(data: { name: string; value: number }): void {
     console.log('Deactivate', data);
   }
+}
+interface ChartData {
+  name: string;
+  value: number;
 }

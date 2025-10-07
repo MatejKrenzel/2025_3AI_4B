@@ -75,10 +75,10 @@ export class UserCardComponent implements OnInit {
     }
   }
 
-  async addNewPost() {
+  /*async addNewPost() {
     if (!this.newPostDescription.trim()) return;
 
-    const newPost: UserPost = {
+    /*onst newPost: UserPost = {
       id: '',
       userId: 'Anonymous',
       description: this.newPostDescription.trim(),
@@ -96,4 +96,4 @@ export class UserCardComponent implements OnInit {
       console.error('Failed to add post:', err);
     }
   }
-}
+}*/
