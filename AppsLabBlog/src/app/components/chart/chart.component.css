@@ -1,0 +1,154 @@
+.example-spacer {
+  flex: 1 1 auto;
+  color: red;
+}
+
+.mat-icon {
+  /* Consider if this rule is needed globally */
+  /* left: 500vh; */
+}
+
+.content {
+  text-align: center;
+  margin-top: 20px;
+  display: flex; /* Enable flexbox for layout control */
+  position: relative; /* To position the mobile chat icon */
+}
+
+.mat-toolbar {
+  position: static;
+}
+
+.user-cards {
+  flex-grow: 1; /* Allow user cards to take up available space */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+.desktop-chat {
+  /* Styles for desktop chat */
+  width: 300px; /* Adjust width as needed */
+  position: relative;
+  right: 20vh;
+  top: 10vh;
+  padding: 16px;
+  border: 1px solid black;
+  border-radius: 4px; /* Optional: Add rounded corners */
+  display: none; /* Initially hidden */
+}
+
+.mobile-chat-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: brown;
+  color: white;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10; /* Ensure it's above other content */
+  display: none; /* Initially hidden */
+  -webkit-tap-highlight-color: transparent; /* Remove mobile tap highlight */
+  outline: none; /* Remove default focus outline */
+}
+
+.mobile-chat-icon mat-icon {
+  font-size: 24px;
+}
+
+.mobile-chat-container {
+  position: fixed;
+  bottom: 0;
+  left: 0; /* Align to the left as well to take full width */
+  width: 100%; /* Take full width of the screen */
+  height: 100%; /* Make it full height */
+  background-color: white;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  transform: translateY(100%); /* Initially hidden */
+  transition: transform 0.3s ease-in-out;
+  z-index: 11; /* Ensure it's above the icon */
+  display: none; /* Initially hidden */
+  display: flex; /* Use flexbox for internal layout */
+  flex-direction: column; /* Stack chat messages and input */
+}
+
+.mobile-chat-container.open {
+  transform: translateY(0); /* Slide in when open */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 770px) {
+  .mat-toolbar {
+    flex-direction: column;
+    align-items: center;
+    color: white;
+  }
+
+  button {
+    width: 100%;
+    -webkit-tap-highlight-color: transparent; /* Remove mobile tap highlight for toolbar buttons */
+    outline: none; /* Remove default focus outline for toolbar buttons */
+  }
+
+  .content {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  app-user-card {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .desktop-chat {
+    display: none; /* Hide the desktop chat on smaller screens */
+  }
+
+  .mobile-chat-icon {
+    display: flex; /* Show the mobile chat icon */
+  }
+
+  .mobile-chat-container {
+    display: flex; /* Ensure it's flex on mobile */
+  }
+}
+
+/* Media query for larger screens */
+@media (min-width: 771px) {
+  .content {
+    flex-direction: row; /* Arrange content in a row */
+    align-items: flex-start; /* Align items to the start of the cross axis */
+  }
+
+  .user-cards {
+    flex-grow: 1; /* Allow user cards to take up most of the width */
+  }
+
+  .desktop-chat {
+    display: block; /* Show the desktop chat on larger screens */
+  }
+
+  .mobile-chat-icon {
+    display: none; /* Hide the mobile chat icon */
+  }
+
+  .mobile-chat-container {
+    display: none; /* Hide the mobile chat container */
+  }
+}
+.chart-container{
+
+margin-top: 10vh;
+margin-left: 50vh;
+
+}
