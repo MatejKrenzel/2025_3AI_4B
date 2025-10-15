@@ -1,17 +1,21 @@
+import { Timestamp } from '@angular/fire/firestore';
+
 export interface UserPost {
- id?: string;
+  id?: string;
   name: string;
   content: string;
-  img: string;
+  img?: string;
   postedBy: string;
   tags?: string[];
-  createdAt?: Date;
-  comments: Comment[];
+  createdAt: Date | Timestamp | any;
+  comments?: Comment[];
+  upvotes?: number;
+  downvotes?: number;
 }
 
 export interface Comment {
   id?: string;
-  userId: string;
-  text: string;
-  timestamp: Date;
+  content: string;
+  author: string;
+  createdAt: Date | Timestamp;
 }

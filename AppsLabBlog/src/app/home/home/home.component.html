@@ -1,13 +1,61 @@
+<div class="home-container">
+  <mat-toolbar color="primary">
+    <span>My Reddit Clone</span>
+    <span class="spacer"></span>
+    <button mat-button (click)="navigateTo('new-post')">
+      <mat-icon>add</mat-icon>
+      Create Post
+    </button>
+  </mat-toolbar>
 
+  <div class="posts-container">
+    <div class="post-card" *ngFor="let post of userPosts">
+      <div class="post-header">
+        <div class="post-info">
+          <span class="posted-by">Posted by u/{{ post.postedBy }}</span>
+          <span class="post-time">{{ formatDate(post.createdAt) }}</span>
+        </div>
+      </div>
 
-<div class="content">
-  <div class="user-cards">
+      <div class="post-content">
+        <h2 class="post-title">{{ post.name }}</h2>
+        
+        <div class="post-tags" *ngIf="post.tags && post.tags.length > 0">
+          <span class="tag" *ngFor="let tag of post.tags">{{ tag }}</span>
+        </div>
+
+        <p class="post-text">{{ post.content }}</p>
+
+        <img *ngIf="post.img" [src]="post.img" alt="Post image" class="post-image">
+      </div>
+
+      <div class="post-actions">
+        <button mat-button>
+          <mat-icon>arrow_upward</mat-icon>
+          Upvote
+        </button>
+        <button mat-button>
+          <mat-icon>arrow_downward</mat-icon>
+          Downvote
+        </button>
+        <button mat-button>
+          <mat-icon>comment</mat-icon>
+          {{ post.comments?.length || 0 }} Comments
+        </button>
+        <button mat-button>
+          <mat-icon>share</mat-icon>
+          Share
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="!userPosts || userPosts.length === 0" class="no-posts">
+      <mat-icon>post_add</mat-icon>
+      <h2>No posts yet</h2>
+      <p>Be the first to create a post!</p>
+      <button mat-raised-button color="primary" (click)="navigateTo('new-post')">
+        Create Post
+      </button>
+    </div>
   </div>
-
-  <div class="desktop-chat">
-
-  </div>
-  <div>
-  
-</div>
 </div>
