@@ -1,12 +1,14 @@
-<mat-toolbar>
-  <mat-toolbar-row>
-      <mat-icon>search</mat-icon>
-   
-  </mat-toolbar-row>
+<mat-toolbar color="primary" class="app-toolbar">
+  <span class="app-title">AppsLabBlog</span>
+
+  <span class="spacer"></span>
+
+  <button mat-raised-button color="accent" (click)="navigateTo('home')">Home</button>
+  <button mat-raised-button color="accent" (click)="navigateTo('contact')">Contact</button>
+  <button mat-raised-button color="accent" (click)="navigateTo('register')">Login/Register</button>
+  <button mat-raised-button color="accent" (click)="navigateTo('chart')">Charts</button>
+  <button mat-raised-button color="accent" (click)="navigateTo('AddPost')">Add Post</button>
+  <button mat-raised-button color="accent" (click)="navigateTo('dashboard')">User</button>
 </mat-toolbar>
 
 <router-outlet></router-outlet>
-
-
-
-

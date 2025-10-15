@@ -65,7 +65,7 @@ export class FirestoreService {
 
     // Let's do that now:
 
-    throw new Error('Please import arrayUnion from firebase/firestore and uncomment the code below.');
+
 
     // import { arrayUnion } from 'firebase/firestore';
     // await updateDoc(postDocRef, { comments: arrayUnion(comment) });
@@ -99,6 +99,13 @@ export class FirestoreService {
       map(users => users.length > 0 ? users[0] as User : undefined)
     );
   }
+  
+  async addUserPost(post: UserPost): Promise<DocumentReference<DocumentData>> {
+  const userPostsRef = collection(this.firestore, 'userPosts');
+  return await addDoc(userPostsRef, post);
+}
+
+
 
   /*
   async loadUserStats(uid: string) {
@@ -121,3 +128,4 @@ export class FirestoreService {
   }
   */
 }
+

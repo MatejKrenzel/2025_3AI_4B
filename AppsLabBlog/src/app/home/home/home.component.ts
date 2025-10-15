@@ -10,6 +10,7 @@ import { UserPost } from '../../components/interfaces/userpost';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { ChartComponent } from '@swimlane/ngx-charts';
 import { GraphComponent } from '../../components/chart/chart.component';
+import { AppComponent } from '../../app.component';
 
 
 
@@ -32,5 +33,13 @@ export class HomeComponent {
 
   navigateTo(route: string) {
     this.router.navigate([`/${route}`]);
+  }
+   ngOnInit(): void {
+    this.firestoreService.getUserPosts().subscribe((posts: UserPost[]) => {
+
+      this.userPosts = posts.sort(
+        (a, b) => (b.createdAt?.getTime?.() || 0) - (a.createdAt?.getTime?.() || 0)
+      );
+    });
   }
 }
