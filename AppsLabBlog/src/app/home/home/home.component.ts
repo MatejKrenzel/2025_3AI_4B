@@ -9,7 +9,7 @@ import { FirestoreService } from '../../components/services/firestore.service';
 import { UserPost } from '../../components/interfaces/userpost';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { GraphComponent } from '../../components/chart/chart.component';
-import { Timestamp } from '@angular/fire/firestore';
+
 
 @Component({
   selector: 'app-home',
@@ -48,7 +48,6 @@ export class HomeComponent {
     });
   }
 
-  // Helper method to convert Firestore Timestamp or Date to milliseconds
   private getTimestamp(date: any): number {
     if (!date) return 0;
     if (date instanceof Date) return date.getTime();

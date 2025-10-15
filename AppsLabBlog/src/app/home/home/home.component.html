@@ -1,8 +1,8 @@
 <div class="home-container">
   <mat-toolbar color="primary">
-    <span>My Reddit Clone</span>
+    <span></span>
     <span class="spacer"></span>
-    <button mat-button (click)="navigateTo('new-post')">
+    <button mat-button (click)="navigateTo('AddPost')">
       <mat-icon>add</mat-icon>
       Create Post
     </button>
@@ -12,7 +12,7 @@
     <div class="post-card" *ngFor="let post of userPosts">
       <div class="post-header">
         <div class="post-info">
-          <span class="posted-by">Posted by u/{{ post.postedBy }}</span>
+          <span class="posted-by">Posted by lab/{{ post.postedBy }}</span>
           <span class="post-time">{{ formatDate(post.createdAt) }}</span>
         </div>
       </div>
