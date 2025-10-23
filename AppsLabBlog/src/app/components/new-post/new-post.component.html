@@ -1,54 +1,154 @@
+<mat-toolbar color="primary">
+  <span>Create New Post</span>
+  <span class="spacer"></span>
+  <button mat-button (click)="navigateTo('home')">
+    <mat-icon>arrow_back</mat-icon>
+    Back to Home
+  </button>
+</mat-toolbar>
 
+<div class="post-container">
+  <mat-card class="post-card">
+    <mat-card-content>
+      <div class="user-info" *ngIf="currentUserName">
+        <mat-icon>person</mat-icon>
+        <span>Posting as: <strong>{{ currentUserName }}</strong></span>
+      </div>
 
-<mat-card class="center-card">
-  <mat-card-content>
-    <form [formGroup]="postForm" (ngSubmit)="submitPost()">
-      <mat-form-field appearance="fill">
-        <mat-label>Name</mat-label>
-        <input matInput formControlName="name">
-      </mat-form-field>
+      <!-- Add *ngIf to prevent form from rendering until form is initialized -->
+      <form [formGroup]="postForm" (ngSubmit)="submitPost()" *ngIf="formInitialized">
+        <!-- Post Title -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Post Title</mat-label>
+          <input matInput formControlName="name" placeholder="Enter post title" required>
+          <mat-icon matSuffix>title</mat-icon>
+          <mat-error *ngIf="postForm.get('name')?.hasError('required')">
+            Title is required
+          </mat-error>
+          <mat-error *ngIf="postForm.get('name')?.hasError('minlength')">
+            Title must be at least 1 character long
+          </mat-error>
+        </mat-form-field>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Image</mat-label>
-        <input matInput formControlName="img">
-      </mat-form-field>
+        <!-- Post Content -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Content</mat-label>
+          <textarea 
+            matInput 
+            formControlName="content" 
+            placeholder="What's on your mind?" 
+            rows="8"
+            required>
+          </textarea>
+          <mat-icon matSuffix>description</mat-icon>
+          <mat-hint align="end">
+            {{ postForm.get('content')?.value?.length || 0 }} / 5000
+          </mat-hint>
+          <mat-error *ngIf="postForm.get('content')?.hasError('required')">
+            Content is required
+          </mat-error>
+          <mat-error *ngIf="postForm.get('content')?.hasError('minlength')">
+            Content must be at least 1 character long
+          </mat-error>
+          <mat-error *ngIf="postForm.get('content')?.hasError('maxlength')">
+            Content cannot exceed 5000 characters
+          </mat-error>
+        </mat-form-field>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Content</mat-label>
-        <textarea matInput rows="5" formControlName="content"></textarea>
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Posted by</mat-label>
-        <input matInput formControlName="postedBy">
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Tags</mat-label>
-        <mat-chip-grid #chipGrid aria-label="Enter Tags">
-          <mat-chip-row *ngFor="let tag of tags" (removed)="remove(tag)">
-            {{ tag }}
-            <button matChipRemove>
-              <mat-icon>cancel</mat-icon>
+        <!-- Image Upload Section -->
+        <div class="image-upload-section">
+          <h4>Add Image</h4>
+          
+          <!-- Image Preview -->
+          <div class="image-preview" *ngIf="imagePreview">
+            <img [src]="imagePreview" alt="Preview">
+            <button mat-icon-button class="remove-image-btn" (click)="removeImage()" type="button">
+              <mat-icon>close</mat-icon>
             </button>
-          </mat-chip-row>
-          <input
-            placeholder="New tag..."
-            [matChipInputFor]="chipGrid"
-            (matChipInputTokenEnd)="add($event)"
-          />
-        </mat-chip-grid>
-      </mat-form-field>
+          </div>
 
-      <button
-        mat-raised-button
-        color="primary"
-        style="float:right;"
-        type="submit"
-        [disabled]="!postForm.valid"
-      >
-        Add Post
-      </button>
-    </form>
-  </mat-card-content>
-</mat-card>
+          <!-- Upload Button -->
+          <div class="upload-buttons" *ngIf="!imagePreview">
+            <input 
+              type="file" 
+              #fileInput 
+              (change)="onFileSelected($event)" 
+              accept="image/*"
+              style="display: none;">
+            
+            <button 
+              mat-stroked-button 
+              color="primary" 
+              type="button"
+              (click)="fileInput.click()">
+              <mat-icon>cloud_upload</mat-icon>
+              Upload from Computer
+            </button>
+
+            <span class="or-divider">OR</span>
+
+            <mat-form-field appearance="outline" class="url-input">
+              <mat-label>Image URL</mat-label>
+              <input matInput formControlName="img" placeholder="https://example.com/image.jpg">
+              <mat-icon matSuffix>link</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <!-- Upload Progress -->
+          <mat-progress-bar 
+            *ngIf="uploadingImage" 
+            mode="indeterminate" 
+            color="primary">
+          </mat-progress-bar>
+        </div>
+
+        <!-- Tags -->
+        <div class="tags-section">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Add Tags</mat-label>
+            <mat-chip-grid #chipGrid>
+              <mat-chip-row *ngFor="let tag of tags" (removed)="remove(tag)">
+                {{ tag }}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+              <input
+                placeholder="Type and press Enter"
+                [matChipInputFor]="chipGrid"
+                (matChipInputTokenEnd)="add($event)"
+              />
+            </mat-chip-grid>
+          </mat-form-field>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="button-container">
+          <button 
+            mat-raised-button 
+            color="primary" 
+            type="submit" 
+            [disabled]="postForm.invalid || loading"
+            class="submit-button">
+            <mat-icon *ngIf="!loading">send</mat-icon>
+            <mat-icon *ngIf="loading" class="spinning">sync</mat-icon>
+            {{ loading ? 'Posting...' : 'Post' }}
+          </button>
+          <button 
+            mat-button 
+            type="button" 
+            (click)="navigateTo('home')"
+            [disabled]="loading">
+            Cancel
+          </button>
+        </div>
+      </form>
+
+      <!-- Show loading message while form initializes -->
+      <div *ngIf="!formInitialized" class="loading-message">
+        <mat-spinner diameter="40"></mat-spinner>
+        <p>Loading form...</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

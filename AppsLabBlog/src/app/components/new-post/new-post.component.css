@@ -1,9 +1,116 @@
-.center-card{
-    max-width: 600px;
-    margin: auto;
-    margin-top: 10px;
-    padding: 30px;
+.post-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
 }
-mat-form-field{
-    width: 100%;
+
+.post-card {
+  padding: 24px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  padding: 12px;
+  background: #f5f5f5;
+  border-radius: 8px;
+  color: #666;
+}
+
+.user-info mat-icon {
+  color: #667eea;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.tags-section {
+  margin-bottom: 24px;
+}
+
+.image-upload-section {
+  margin-bottom: 24px;
+  padding: 20px;
+  border: 2px dashed #e0e0e0;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.image-upload-section h4 {
+  margin: 0 0 16px 0;
+  color: #333;
+  font-size: 16px;
+}
+
+.image-preview {
+  position: relative;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.image-preview img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  display: block;
+  background: white;
+}
+
+.remove-image-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+}
+
+.remove-image-btn:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.upload-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+.or-divider {
+  color: #999;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.url-input {
+  width: 100%;
+}
+
+.button-container {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+.submit-button {
+  min-width: 120px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }

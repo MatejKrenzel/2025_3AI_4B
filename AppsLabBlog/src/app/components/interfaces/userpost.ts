@@ -6,11 +6,13 @@ export interface UserPost {
   content: string;
   img?: string;
   postedBy: string;
+  authorId: string;  // ADD THIS - Firebase Auth UID of the author
   tags?: string[];
-  createdAt: Date | Timestamp | any;
-  comments?: Comment[];
+  createdAt: Date | any;
+  comments?: any[];
   upvotes?: number;
   downvotes?: number;
+  hidden?: boolean;  // For admin to hide posts
 }
 
 export interface Comment {
