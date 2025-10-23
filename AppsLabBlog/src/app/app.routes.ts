@@ -7,6 +7,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ChartComponent } from '@swimlane/ngx-charts';
 import { GraphComponent } from './components/chart/chart.component';
 import { NewPostComponent  } from "./components/new-post/new-post.component";
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { AdminGuard } from './admin.guard';
 
 
 export const routes: Routes = [
@@ -16,7 +18,8 @@ export const routes: Routes = [
     { path: 'footer', component: FooterComponent },
     { path: 'register', component: RegisterComponent },  
     { path: 'chart', component: GraphComponent },
-    { path: 'AddPost', component: NewPostComponent },
+    { path: 'AddPost', component: NewPostComponent, },
+    { path: 'admin', component: AdminPanelComponent, canActivate: [AdminGuard] },
   { path: 'dashboard', loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent) },
 
 

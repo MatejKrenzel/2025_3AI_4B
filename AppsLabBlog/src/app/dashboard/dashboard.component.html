@@ -1,26 +1,110 @@
-
-
-
-<div class="dashboard-wrapper" *ngIf="user">
-  <mat-card>
-    <mat-card-header>
-      <div mat-card-avatar class="avatar">
-        <img [src]="user.photoURL || defaultAvatar" alt="Avatar" />
+<div class="dashboard-container">
+  <!-- Header with Logout -->
+  <header class="dashboard-header">
+    <div class="header-content">
+      <div class="logo">
+        <h1>AppsLabBlog Panel</h1>
       </div>
-      <mat-card-title>{{ user.displayName || 'Používateľ' }}</mat-card-title>
-      <mat-card-subtitle>{{ user.email }}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <p><strong>UID:</strong> {{ user.uid }}</p>
-    </mat-card-content>
-  </mat-card>
+      <nav class="nav-menu">
+        <button class="nav-btn" (click)="navigateTo('home')">Home</button>
+        <button *ngIf="isAdmin" class="nav-btn admin-btn" (click)="navigateToAdmin()">
+          Admin Panel
+        </button>
+        <button class="logout-btn" (click)="logout()">
+          <span class="logout-icon">→</span> Logout
+        </button>
+      </nav>
+    </div>
+  </header>
 
-  <mat-card *ngIf="stats" class="stats-card">
-    <mat-card-title>📊 Štatistiky účtu</mat-card-title>
-    <mat-card-content>
-      <p><strong>Počet postov:</strong> {{ stats.posts }}</p>
-      <p><strong>Počet komentárov:</strong> {{ stats.comments }}</p>
-      <p><strong>Registrovaný od:</strong> {{ stats.joinedAt }}</p>
-    </mat-card-content>
-  </mat-card>
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading your dashboard...</p>
+  </div>
+
+  <!-- Dashboard Content -->
+  <div *ngIf="!loading && currentUser" class="dashboard-content">
+    <!-- Welcome Section -->
+    <section class="welcome-section">
+      <div class="welcome-card">
+        <div class="user-avatar">
+          {{ currentUser.username.charAt(0).toUpperCase() }}
+        </div>
+        <div class="welcome-text">
+          <h2>Welcome back, {{ currentUser.username }}!</h2>
+          <p class="user-email">{{ currentUser.email }}</p>
+          <div class="user-badges">
+            <span class="badge" *ngIf="isAdmin">Admin</span>
+            <span class="badge member-badge">
+              Member for {{ getDaysSinceMember() }} days
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Statistics Grid -->
+    <section class="stats-section">
+      <h3>Your Statistics</h3>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon posts-icon">📝</div>
+          <div class="stat-content">
+            <h4>Total Posts</h4>
+            <p class="stat-number">{{ userStats?.totalPosts || 0 }}</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon comments-icon">💬</div>
+          <div class="stat-content">
+            <h4>Comments</h4>
+            <p class="stat-number">{{ userStats?.totalComments || 0 }}</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon upvotes-icon">👍</div>
+          <div class="stat-content">
+            <h4>Upvotes Received</h4>
+            <p class="stat-number">{{ userStats?.totalUpvotes || 0 }}</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon downvotes-icon">👎</div>
+          <div class="stat-content">
+            <h4>Downvotes Received</h4>
+            <p class="stat-number">{{ userStats?.totalDownvotes || 0 }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Activity Summary -->
+    <section class="activity-section">
+      <h3>Activity Summary</h3>
+      <div class="activity-card">
+        <div class="activity-item">
+          <span class="activity-label">Net Karma</span>
+          <span class="activity-value karma-positive">
+            +{{ getNetKarma() }}
+          </span>
+        </div>
+        <div class="activity-item">
+          <span class="activity-label">Total Contributions</span>
+          <span class="activity-value">
+            {{ getTotalContributions() }}
+          </span>
+        </div>
+        <div class="activity-item">
+          <span class="activity-label">Average Upvotes per Post</span>
+          <span class="activity-value">
+            {{ getAverageUpvotes() }}
+          </span>
+        </div>
+      </div>
+    </section>
+  </div>
 </div>

@@ -1,0 +1,45 @@
+<div class="admin-container">
+  <div class="admin-header">
+    <h1>Admin Panel</h1>
+    <p>Manage posts for AppsLabBlog</p>
+  </div>
+
+  <div class="admin-content">
+    <div *ngIf="loading" class="loading">
+      Loading posts...
+    </div>
+
+    <div *ngIf="!loading && posts.length === 0" class="no-posts">
+      No posts found
+    </div>
+
+    <div class="posts-grid" *ngIf="!loading && posts.length > 0">
+      <div class="post-card" *ngFor="let post of posts">
+        <div class="post-header">
+          <h3>{{ post.title }}</h3>
+          <span class="post-date">{{ formatDate(post.createdAt) }}</span>
+        </div>
+        
+        <div class="post-meta">
+          <span class="author">By: {{ post.author }}</span>
+          <span class="votes">
+            ↑ {{ post.upvotes }} ↓ {{ post.downvotes }}
+          </span>
+        </div>
+
+        <div class="post-content">
+          {{ post.content.substring(0, 150) }}{{ post.content.length > 150 ? '...' : '' }}
+        </div>
+
+        <div class="post-actions">
+          <button class="btn-hide" (click)="togglePostVisibility(post)">
+            {{ post.hidden ? 'Unhide' : 'Hide' }}
+          </button>
+          <button class="btn-delete" (click)="deletePost(post.id)">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

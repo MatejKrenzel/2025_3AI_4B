@@ -1,52 +1,59 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../auth.service';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router'; // Keep this import for Router
-import { AuthService } from '../../auth.service'; // Keep this import for AuthService
-import { MatToolbar } from '@angular/material/toolbar';
 
 @Component({
-  standalone: true,
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  imports: [CommonModule, ReactiveFormsModule, MatToolbar] // Only include modules here
+  imports : [CommonModule,ReactiveFormsModule]
 })
-export class LoginComponent {
-  // Correctly declare and initialize the form in one place
-  form: FormGroup;
-  loading = false;
-  error: string | null = null;
+export class LoginComponent implements OnInit {
+  loginForm: FormGroup;
+  errorMessage: string = '';
+  loading: boolean = false;
+  returnUrl: string = '/dashboard';
 
   constructor(
     private fb: FormBuilder,
-    private router: Router, // <--- INJECT THE ROUTER HERE
-    private auth: AuthService // <--- INJECT THE AUTHSERVICE HERE
+    private authService: AuthService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
-    this.form = this.fb.group({
+    this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
+      password: ['', [Validators.required]]
     });
   }
-
-  navigateTo(path: string) {
-    this.router.navigate([`/${path}`]);
+    navigateTo(route: string) {
+    this.router.navigate([`/${route}`]);
   }
 
-  submit() {
-    if (this.form.invalid) return;
+  ngOnInit() {
+    // Get return url from route parameters or default to '/dashboard'
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
+  }
+
+  async onSubmit() {
+    if (this.loginForm.invalid) {
+      return;
+    }
 
     this.loading = true;
-    this.auth.login(
-      this.form.value.email,
-      this.form.value.password
-    ).subscribe({
-      next: () => this.router.navigate(['/dashboard']),
-      error: (err: any) => {
-        this.error = err.message;
-        this.loading = false;
-      }
-    });
+    this.errorMessage = '';
+
+    const { email, password } = this.loginForm.value;
+    const result = await this.authService.login(email, password);
+
+    this.loading = false;
+
+    if (result.success) {
+      // Redirect to the return URL or dashboard
+      this.router.navigateByUrl(this.returnUrl);
+    } else {
+      this.errorMessage = result.error || 'Login failed';
+    }
   }
 }
