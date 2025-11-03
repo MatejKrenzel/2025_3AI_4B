@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
 import { Router, RouterOutlet } from '@angular/router';
 import { FirestoreService } from '../services/firestore.service';
-import { AuthService } from '../../auth.service';
+import { AuthService } from '../services/auth.service';
 import { UserPost } from "../../components/interfaces/userpost";
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';

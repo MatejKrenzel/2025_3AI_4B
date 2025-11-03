@@ -1,7 +1,7 @@
 // admin-panel.component.ts
 import { Component, OnInit } from '@angular/core';
 import { Firestore, collection, query, orderBy, getDocs, doc, deleteDoc, updateDoc } from '@angular/fire/firestore';
-import { AuthService } from '../../app/auth.service';
+import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 
 interface Post {

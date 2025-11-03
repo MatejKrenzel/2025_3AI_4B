@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthService } from '../../auth.service';
+import { AuthService } from '../services/auth.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Get return url from route parameters or default to '/dashboard'
+    
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
   }
 
@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
     this.loading = false;
 
     if (result.success) {
-      // Redirect to the return URL or dashboard
+    
       this.router.navigateByUrl(this.returnUrl);
     } else {
       this.errorMessage = result.error || 'Login failed';

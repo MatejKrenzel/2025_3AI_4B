@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Firestore, collection, query, getDocs, where } from '@angular/fire/firestore';
-import { AuthService, UserProfile } from '../auth.service';
+import { AuthService, UserProfile } from '../components/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 

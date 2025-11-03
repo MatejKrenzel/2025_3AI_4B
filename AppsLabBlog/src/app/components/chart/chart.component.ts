@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { ChartService } from '../../chart.service';
+import { ChartService } from '../services/chart.service';
 import { Router } from '@angular/router';
 import { FirestoreService } from '../services/firestore.service';
 import { UserPost } from '../../components/interfaces/userpost';

@@ -20,17 +20,7 @@ interface ChatMessage {
   timestamp: Date;
 }
 
-/*const postConverter: FirestoreDataConverter<Omit<UserPost, 'id'>> = {
-  // Converts a UserPost object to Firestore data format
-  toFirestore: (post: Omit<UserPost, 'id'>) => {
-    return post;
-  },
-  // Converts Firestore snapshot data back to a UserPost object
-  fromFirestore: (snapshot) => {
-    return snapshot.data() as Omit<UserPost, 'id'>;
-  }
-};
-*/
+
 @Injectable({
   providedIn: 'root'
 })
@@ -53,28 +43,10 @@ export class FirestoreService {
   async addCommentToPost(postId: string, comment: Comment): Promise<void> {
     const postDocRef = doc(this.firestore, `userPosts/${postId}`);
 
-    // Note: Firebase modular SDK FieldValue is imported differently
-    // We need to import arrayUnion from '@firebase/firestore' to add comment atomically
-    // I'll add that import below and use it here
-
-    // Import arrayUnion:
-    // import { arrayUnion } from 'firebase/firestore';
-
-    // Then update:
-    // await updateDoc(postDocRef, { comments: arrayUnion(comment) });
-
-    // Let's do that now:
-
-
-
-    // import { arrayUnion } from 'firebase/firestore';
-    // await updateDoc(postDocRef, { comments: arrayUnion(comment) });
+    
   }
 
- /* addPost(post: Omit<UserPost, 'id'>): Promise<DocumentReference<Omit<UserPost, 'id'>>> {
-  const userPostsRef = collection(this.firestore, 'userPosts').withConverter(postConverter);
-  return addDoc(userPostsRef, post);
-}*/
+
 
   // --- Chat Messages ---
 
@@ -107,25 +79,6 @@ export class FirestoreService {
 
 
 
-  /*
-  async loadUserStats(uid: string) {
-    const userDocRef = doc(this.firestore, `users/${uid}`);
-    const userSnap = await getDoc(userDocRef);
-    if (userSnap.exists()) {
-      const data = userSnap.data();
-      this.stats = {
-        posts: data['posts'] || 0,
-        comments: data['comments'] || 0,
-        joinedAt: data['joinedAt'] || 'Neznámy dátum'
-      };
-    } else {
-      this.stats = {
-        posts: 0,
-        comments: 0,
-        joinedAt: 'Neznámy dátum'
-      };
-    }
-  }
-  */
+ 
 }
 

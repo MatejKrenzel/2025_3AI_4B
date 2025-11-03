@@ -28,7 +28,6 @@ export class AuthService {
     try {
       const credential = await createUserWithEmailAndPassword(this.auth, email, password);
       
-      // Create user profile in Firestore
       const userProfile: UserProfile = {
         uid: credential.user.uid,
         email: email,

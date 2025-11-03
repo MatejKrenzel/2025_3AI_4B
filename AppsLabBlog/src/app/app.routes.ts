@@ -7,8 +7,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ChartComponent } from '@swimlane/ngx-charts';
 import { GraphComponent } from './components/chart/chart.component';
 import { NewPostComponent  } from "./components/new-post/new-post.component";
-import { AdminPanelComponent } from './admin-panel/admin-panel.component';
-import { AdminGuard } from './admin.guard';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
+import { AdminGuard } from './guard/admin.guard';
 
 
 export const routes: Routes = [
